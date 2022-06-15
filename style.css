@@ -35,3 +35,10 @@ body {
 .bottom {
     border-top: 2px solid black;
 }
+
+.tile {
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    font-size: 3rem;
+}
