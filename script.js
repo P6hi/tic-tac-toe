@@ -1,5 +1,6 @@
 const gamePlay = (function() {
-
+    
+    let playerMarkValue;
     const playerOne = player("Player 1", "X", true);
     const playerTwo = player("Player 2", "O", false);
 
@@ -7,7 +8,6 @@ const gamePlay = (function() {
     const tiles = document.querySelectorAll('.tile');
     tiles.forEach((tile) => {
     tile.addEventListener('click', () => {
-        let playerMarkValue;
         if (playerOne.isTurn === true) {
             playerMarkValue = playerOne.playerMark;
         } else {
@@ -21,10 +21,10 @@ const gamePlay = (function() {
                 for (let j = 0; j < gameBoard.gameArray[i].length; j++)
                 if (tileX === j) {
                     gameBoard.gameArray[i][j].mark = playerMarkValue;
-                    console.log(gameBoard.gameArray[i][j].mark = 'X');
                 }
             }
         }
+        winCheck();
         if (playerOne.isTurn === true) {
             playerOne.isTurn = false;
             playerTwo.isTurn = true;
@@ -32,7 +32,6 @@ const gamePlay = (function() {
             playerOne.isTurn = true;
             playerTwo.isTurn = false;
         }
-        winCheck();
     });
 });
     
@@ -54,12 +53,26 @@ const gamePlay = (function() {
     function horizontalWin() {
         for (let i = 0; i < gameBoard.gameArray.length; i++) {
             for (let j = 0; j < gameBoard.gameArray[i].length; j++) {
-                if (gameBoard.gameArray[i][0].mark === 'X') {
-                    if (gameBoard.gameArray[i][0 + 1].mark === 'X' && gameBoard.gameArray[i][0 + 2].mark === 'X') {
-                        alert('You win');
-                        return true;
-                    } 
+
+                if (playerOne.isTurn === true) {
+                    if (gameBoard.gameArray[i][0].mark === playerOne.playerMark) {
+                        if (gameBoard.gameArray[i][0 + 1].mark === playerOne.playerMark && gameBoard.gameArray[i][0 + 2].mark === playerOne.playerMark) {
+                            alert('Player One wins!');
+                            return true;
+                        } 
+                    }
+                } else if ((playerTwo.isTurn === true)) {
+                    if (gameBoard.gameArray[i][0].mark === playerTwo.playerMark) {
+                        if (gameBoard.gameArray[i][0 + 1].mark === playerTwo.playerMark && gameBoard.gameArray[i][0 + 2].mark === playerTwo.playerMark) {
+                            alert('Player Two wins!');
+                            return true;
+                        } 
+                    }
                 }
+
+
+
+
             }
         }
     }
@@ -67,12 +80,25 @@ const gamePlay = (function() {
     function verticalWin() {
         for (let i = 0; i < gameBoard.gameArray.length; i++) {
             for (let j = 0; j < gameBoard.gameArray[i].length; j++) {
-                if (gameBoard.gameArray[0][j].mark === 'X') {
-                    if (gameBoard.gameArray[0 + 1][j].mark === 'X' && gameBoard.gameArray[0 + 2][j].mark === 'X') {
-                        alert('You win');
-                        return true;
+
+
+                if (playerOne.isTurn === true) {
+                    if (gameBoard.gameArray[0][j].mark === playerOne.playerMark) {
+                        if (gameBoard.gameArray[0 + 1][j].mark === playerOne.playerMark && gameBoard.gameArray[0 + 2][j].mark === playerOne.playerMark) {
+                            alert('Player One wins!');
+                            return true;
+                        }
+                    }
+                } else {
+                    if (gameBoard.gameArray[0][j].mark === playerTwo.playerMark) {
+                        if (gameBoard.gameArray[0 + 1][j].mark === playerTwo.playerMark && gameBoard.gameArray[0 + 2][j].mark === playerTwo.playerMark) {
+                            alert('Player Two wins!');
+                            return true;
+                        }
                     }
                 }
+
+
             }   
         }
     }
@@ -80,21 +106,44 @@ const gamePlay = (function() {
     function diagonalWin() {
         for (let i = 0; i < gameBoard.gameArray.length; i++) {
             for (let j = 0; j < gameBoard.gameArray[i].length; j++) {
-                if (gameBoard.gameArray[0][0].mark === 'X') {
-                    if (gameBoard.gameArray[0 + 1][0 + 1].mark === 'X' && gameBoard.gameArray[0 + 2][0 + 2].mark === 'X') {
-                        alert('You win');
-                        return true;
-                    } else {
-                        return false;
+
+                if (playerOne.isTurn === true) {
+                    if (gameBoard.gameArray[0][0].mark === playerOne.playerMark) {
+                        if (gameBoard.gameArray[0 + 1][0 + 1].mark === playerOne.playerMark && gameBoard.gameArray[0 + 2][0 + 2].mark === playerOne.playerMark) {
+                            alert('Player One wins!');
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    } else if (gameBoard.gameArray[0][2].mark === playerOne.playerMark) {
+                        if (gameBoard.gameArray[0 + 1][2 - 1].mark === playerOne.playerMark && gameBoard.gameArray[0 + 2][2 - 2].mark === playerOne.playerMark) {
+                            alert('Player One wins!');
+                            return true;
+                        } else {
+                            return false;
+                        }
                     }
-                } else if (gameBoard.gameArray[0][2].mark === 'X') {
-                    if (gameBoard.gameArray[0 + 1][2 - 1].mark === 'X' && gameBoard.gameArray[0 + 2][2 - 2].mark === 'X') {
-                        alert('You win');
-                        return true;
-                    } else {
-                        return false;
+
+                } else {
+                    if (gameBoard.gameArray[0][0].mark === playerTwo.playerMark) {
+                        if (gameBoard.gameArray[0 + 1][0 + 1].mark === playerTwo.playerMark && gameBoard.gameArray[0 + 2][0 + 2].mark === playerTwo.playerMark) {
+                            alert('Player Two wins!');
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    } else if (gameBoard.gameArray[0][2].mark === playerTwo.playerMark) {
+                        if (gameBoard.gameArray[0 + 1][2 - 1].mark === playerTwo.playerMark && gameBoard.gameArray[0 + 2][2 - 2].mark === playerTwo.playerMark) {
+                            alert('Player Two wins!');
+                            return true;
+                        } else {
+                            return false;
+                        }
                     }
                 }
+
+
+
             }
         }
     }
