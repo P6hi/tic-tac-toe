@@ -3,18 +3,20 @@ const gamePlay = (function() {
     let turns = 0;
     const nameBtn = document.querySelector('.name-btn');
     const startBtn = document.querySelector('.start-btn');
+    const resetBtn = document.querySelector('.reset-btn');
     let playerTwo = player('Player Two', 'O', false);
     let playerOne = player('Player One', 'X', true);
     nameBtn.addEventListener('click', () => {
         let playerNameInput = prompt('What is your name?', '').toString();
-        console.log(typeof playerNameInput);
         playerOne = player(playerNameInput, 'X', true);
     });
 
     startBtn.addEventListener('click', () => {
-        console.log(playerOne.playerName);
         play();
-    })
+        reset();
+    });
+
+    resetBtn.addEventListener('click', reset);
 
     function play() {  
         const tiles = document.querySelectorAll('.tile');
@@ -47,7 +49,7 @@ const gamePlay = (function() {
             }
         });
     });
-    }
+}
     
     // Game board
     const gameBoard = {
@@ -180,5 +182,18 @@ const gamePlay = (function() {
         }
     }
 
+    function reset() {
+        const tiles = document.querySelectorAll('.tile');
+        tiles.forEach((tile) => {
+            tile.textContent = '';
+        });
+        for (let i = 0; i < gameBoard.gameArray.length; i++) {
+            for (let j = 0; j < gameBoard.gameArray[i].length; j++) {
+                gameBoard.gameArray[i][j].mark = null;
+            }
+        }
+        playerTwo.isTurn = false;
+        playerOne.isTurn = true;
+    }
 
 })();
