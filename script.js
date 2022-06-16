@@ -69,6 +69,7 @@ const gamePlay = (function() {
             btnContainer.appendChild(winningMessage);
             return;
         } else {
+            btnContainer.appendChild(winningMessage);
             tieCheck();
         }
     
@@ -181,7 +182,7 @@ const gamePlay = (function() {
         for (let i = 0; i < gameBoard.gameArray.length; i++) {
             for (let j = 0; j < gameBoard.gameArray[i].length; j++) {
                 if (turns === 9 && gameBoard.gameArray[i][j].mark !== null) {
-                    alert('Tie!')
+                    winningMessage.textContent = 'Tie!';
                     return true;
                 }
             }
