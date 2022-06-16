@@ -1,6 +1,7 @@
 const gamePlay = (function() {
     
     let playerMarkValue;
+    let turns = 0;
     const playerOne = player("Player 1", "X", true);
     const playerTwo = player("Player 2", "O", false);
 
@@ -24,6 +25,7 @@ const gamePlay = (function() {
                 }
             }
         }
+        turns += 1;
         winCheck();
         if (playerOne.isTurn === true) {
             playerOne.isTurn = false;
@@ -44,9 +46,11 @@ const gamePlay = (function() {
 
     
     function winCheck() {
-        horizontalWin();
-        verticalWin();
-        diagonalWin();
+        if (horizontalWin() || verticalWin() || diagonalWin()) {
+            return;
+        } else {
+            tieCheck();
+        }
     
     }
     
@@ -70,9 +74,6 @@ const gamePlay = (function() {
                     }
                 }
 
-
-
-
             }
         }
     }
@@ -80,7 +81,6 @@ const gamePlay = (function() {
     function verticalWin() {
         for (let i = 0; i < gameBoard.gameArray.length; i++) {
             for (let j = 0; j < gameBoard.gameArray[i].length; j++) {
-
 
                 if (playerOne.isTurn === true) {
                     if (gameBoard.gameArray[0][j].mark === playerOne.playerMark) {
@@ -142,8 +142,6 @@ const gamePlay = (function() {
                     }
                 }
 
-
-
             }
         }
     }
@@ -157,6 +155,17 @@ const gamePlay = (function() {
             isTurn
         }
     }
-    
+
+    function tieCheck() {
+        for (let i = 0; i < gameBoard.gameArray.length; i++) {
+            for (let j = 0; j < gameBoard.gameArray[i].length; j++) {
+                if (turns === 9 && gameBoard.gameArray[i][j].mark !== null) {
+                    alert('Tie!')
+                    return true;
+                }
+            }
+        }
+    }
+
 
 })();
