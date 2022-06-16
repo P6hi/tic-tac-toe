@@ -42,3 +42,7 @@ body {
     align-items: center;
     font-size: 3rem;
 }
+
+.btn-container {
+    align-self: start;
+}
