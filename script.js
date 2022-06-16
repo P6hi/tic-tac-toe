@@ -1,20 +1,36 @@
 const gamePlay = (function() {
 
+    const playerOne = player("Player 1", "X", true);
+    const playerTwo = player("Player 2", "O", false);
+
     // Marks tiles
     const tiles = document.querySelectorAll('.tile');
     tiles.forEach((tile) => {
     tile.addEventListener('click', () => {
-        tile.textContent = 'X';
+        let playerMarkValue;
+        if (playerOne.isTurn === true) {
+            playerMarkValue = playerOne.playerMark;
+        } else {
+            playerMarkValue = playerTwo.playerMark;
+        }
+        tile.textContent = playerMarkValue;
         const tileY = parseInt(tile.dataset.y);
         const tileX = parseInt(tile.dataset.x);
         for (let i = 0; i < gameBoard.gameArray.length; i++) {
             if (tileY === i) {
                 for (let j = 0; j < gameBoard.gameArray[i].length; j++)
                 if (tileX === j) {
-                    gameBoard.gameArray[i][j].mark = 'X';
+                    gameBoard.gameArray[i][j].mark = playerMarkValue;
                     console.log(gameBoard.gameArray[i][j].mark = 'X');
                 }
             }
+        }
+        if (playerOne.isTurn === true) {
+            playerOne.isTurn = false;
+            playerTwo.isTurn = true;
+        } else {
+            playerOne.isTurn = true;
+            playerTwo.isTurn = false;
         }
         winCheck();
     });
@@ -82,5 +98,16 @@ const gamePlay = (function() {
             }
         }
     }
+
+    function player(name, mark, turn) {
+        let isTurn = turn;
+        let playerName = name;
+        let playerMark = mark;
+        return {
+            playerMark,
+            isTurn
+        }
+    }
+    
 
 })();
